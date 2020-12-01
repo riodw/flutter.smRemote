@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -24,21 +24,46 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  #
+  get: ^3.21.2
+  # network requests
+  http:
+  # local storage (used to store dark-mode)
+  shared_preferences: ">=0.5.7+3 <2.0.0"
+  # dependency for the Firebase Core Flutter SDK
+  firebase_core: ^0.4.0+9
+  # firebase cloud_firestore
+  cloud_firestore: ^0.12.9+5
+  # Google Analytics (dependency for the FlutterFire plugin)
+  firebase_analytics: ^5.0.2
+  # Charts
+  charts_flutter: ^0.9.0
+  # Connectivity but with location services (used for testing internet connection)
+  simple_connectivity: ^0.1.1
+  # Render HTML (used for privacy policy)
+  flutter_html: ^1.0.0
+  # Open links (used for privacy policy)
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.8.0"
+
+flutter_icons: # https://pub.dev/packages/flutter_launcher_icons
+  # COMMAND: flutter pub run flutter_launcher_icons:main
+  android: true
+  ios: true
+  # image_path: "Logo/flutter.moviesliders.logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
