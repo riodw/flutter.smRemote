@@ -76,6 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {
+                return;
+              }),
+        ],
       ),
       body: Center(
         child: GridView.count(
@@ -85,21 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
             (index) {
               return Container(
                 margin: EdgeInsets.all(10),
-                child: Center(
-                  child: Text(
-                    '😈',
-                    // 'Item $index',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
-                  ),
+                  borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
@@ -108,6 +103,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       offset: Offset(0, 3), // changes position of shadow
                     ),
                   ],
+                ),
+                child: Container(
+                  // decoration: BoxDecoration(
+                  //   boxShadow: [
+                  //     const BoxShadow(
+                  //       color: Colors.transparent,
+                  //     ),
+                  //     BoxShadow(
+                  //       color: Colors.grey.withOpacity(0.5),
+                  //       spreadRadius: 0.0,
+                  //       blurRadius: 2.0,
+                  //     ),
+                  //   ],
+                  // ),
+                  child: Center(
+                    child: Text(
+                      '😈',
+                      // 'Item $index',
+                      style: TextStyle(fontSize: 35),
+                    ),
+                  ),
                 ),
               );
             },
