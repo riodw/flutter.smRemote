@@ -1,4 +1,4 @@
-package com.example.bdsmRemote
+package com.example.smRemote2
 
 import io.flutter.embedding.android.FlutterActivity
 

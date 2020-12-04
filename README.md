@@ -1,4 +1,4 @@
-# bdsmRemote
+# smRemote2
 
 A new Flutter project.
 
