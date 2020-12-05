@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'smRemote'),
     );
   }
 }
@@ -44,9 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: GridView.count(
+          physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 4,
           children: List.generate(
-            32,
+            28,
             (index) {
               return Container(
                 margin: EdgeInsets.all(10),
