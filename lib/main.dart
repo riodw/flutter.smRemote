@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -32,24 +34,28 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.more_vert),
-              onPressed: () {
-                return;
-              }),
-        ],
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      //   brightness: Brightness.dark,
+      //   actions: <Widget>[
+      //     IconButton(
+      //         icon: Icon(Icons.more_vert),
+      //         onPressed: () {
+      //           return;
+      //         }),
+      //   ],
+      // ),
       body: Center(
         child: GridView.count(
           physics: NeverScrollableScrollPhysics(),
           crossAxisCount: 4,
-          children: List.generate(
-            28,
-            (index) {
-              return Container(
+          children: <Widget>[
+            // GRIDVIEW
+            GestureDetector(
+              onTap: () {
+                print("Container clicked");
+              },
+              child: Container(
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -84,13 +90,76 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                print("Container clicked");
+              },
+              child: Container(
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Container(
+                  // decoration: BoxDecoration(
+                  //   boxShadow: [
+                  //     const BoxShadow(
+                  //       color: Colors.transparent,
+                  //     ),
+                  //     BoxShadow(
+                  //       color: Colors.grey.withOpacity(0.5),
+                  //       spreadRadius: 0.0,
+                  //       blurRadius: 2.0,
+                  //     ),
+                  //   ],
+                  // ),
+                  child: Center(
+                    child: Icon(
+                      CupertinoIcons.add,
+                      size: 50,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                // height: 200,
+                color: Colors.amber,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Text('Modal BottomSheet'),
+                      ElevatedButton(
+                        child: const Text('Close BottomSheet'),
+                        onPressed: () => Navigator.pop(context),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
         tooltip: 'Increment',
         child: Icon(Icons.menu),
       ),
