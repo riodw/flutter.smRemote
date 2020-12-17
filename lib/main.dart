@@ -119,6 +119,15 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   ];
 
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -246,20 +255,50 @@ class _MyHomePageState extends State<MyHomePage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
-                                    TextField(
+                                    TextFormField(
                                       maxLength: 2,
-                                      decoration: InputDecoration(
+                                      controller: myController,
+                                      decoration: const InputDecoration(
                                         border: const OutlineInputBorder(),
-                                        hintText: '2 Characters',
+                                        suffix: Text('2 Character Max'),
+                                        hintText: 'Title',
                                       ),
                                     ),
                                     const Text('Modal BottomSheet'),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 30,
                                     ),
-                                    ElevatedButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('Close BottomSheet'),
+                                    Row(
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        RaisedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              commands.add(
+                                                {
+                                                  'id': 0,
+                                                  'name': myController.text,
+                                                  'description':
+                                                      'This is a description',
+                                                },
+                                              );
+                                              Navigator.pop(context);
+                                            });
+                                            // print(myController.text);
+                                          },
+                                          color: Colors.blue,
+                                          textColor: Colors.white,
+                                          child: const Text('Save'),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        RaisedButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: const Text('Cancel'),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
