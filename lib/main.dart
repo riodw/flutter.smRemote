@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+// Pub
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 void main() {
   runApp(MyApp());
@@ -48,6 +50,71 @@ class _MyHomePageState extends State<MyHomePage> {
     {
       'id': 0,
       'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '🔱',
+      'description': 'This is a description',
+    },
+    {
+      'id': 0,
+      'name': '😈',
       'description': 'This is a description',
     },
   ];
@@ -163,29 +230,130 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView.separated(
                 itemCount: commands.length,
                 separatorBuilder: (BuildContext context, int index) =>
-                    Divider(height: 3, color: Colors.grey),
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 50,
-                    // color: Colors.amber[100],
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 10,
+                    Divider(height: 1, color: Colors.grey),
+                itemBuilder: (final BuildContext context, final int index) {
+                  if (index == commands.length - 1)
+                    return FlatButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              color: Colors.white10,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    TextField(
+                                      maxLength: 2,
+                                      decoration: InputDecoration(
+                                        border: const OutlineInputBorder(),
+                                        hintText: '2 Characters',
+                                      ),
+                                    ),
+                                    const Text('Modal BottomSheet'),
+                                    SizedBox(
+                                      height: 30,
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('Close BottomSheet'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      color: Colors.indigoAccent,
+                      height: 54,
+                      textColor: Colors.white,
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add),
+                          Text('New'),
+                        ],
+                      ),
+                    );
+
+                  return Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.25,
+                    child: Container(
+                      color: Colors.white,
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Text(
+                            commands[index]['name'],
+                            style: TextStyle(fontSize: 35),
+                          ),
+                          foregroundColor: Colors.white,
                         ),
-                        Text(
-                          commands[index]['name'],
-                          style: TextStyle(fontSize: 35),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
+                        title: Text(
                           commands[index]['description'],
-                          style: TextStyle(fontSize: 16),
                         ),
-                      ],
+                        subtitle: Text('SlidableDrawerDelegate'),
+                      ),
                     ),
+                    // actions: <Widget>[
+                    //   IconSlideAction(
+                    //     caption: 'Archive',
+                    //     color: Colors.blue,
+                    //     icon: Icons.archive,
+                    //     onTap: () {},
+                    //   ),
+                    //   IconSlideAction(
+                    //     caption: 'Share',
+                    //     color: Colors.indigo,
+                    //     icon: Icons.share,
+                    //     onTap: () {},
+                    //   ),
+                    // ],
+                    secondaryActions: <Widget>[
+                      IconSlideAction(
+                        caption: 'Edit',
+                        color: Colors.indigo,
+                        icon: Icons.edit,
+                        onTap: () {},
+                      ),
+                      IconSlideAction(
+                        caption: 'Delete',
+                        color: Colors.red,
+                        icon: Icons.delete,
+                        onTap: () => showDialog(
+                          context: context,
+                          builder: (context) => CupertinoAlertDialog(
+                            title: Text('Delete ' + commands[index]['name']),
+                            content: const Text(
+                              'Are you Sure?',
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                textColor: Colors.blue,
+                                child: const Text('Cancel'),
+                                onPressed: () => Navigator.pop(context),
+                              ),
+                              FlatButton(
+                                textColor: Colors.red,
+                                child: const Text('DELETE'),
+                                onPressed: () async {
+                                  setState(() {
+                                    commands.removeAt(index);
+                                    Navigator.pop(context);
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
