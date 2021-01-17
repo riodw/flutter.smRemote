@@ -23,8 +23,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # for home screen edits
-  flutter_slidable:
+  # database
+  cloud_firestore: ^0.14.4
+  # for slide deleting emojis
+  flutter_slidable: ^0.5.7
+  # for loading settings page from bottom
+  page_transition: ^1.1.7+5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
