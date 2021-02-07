@@ -312,9 +312,9 @@ class _SecondPage extends State<SecondPage> {
           builder: (BuildContext context) {
             return CupertinoPageScaffold(
               navigationBar: CupertinoNavigationBar(
-                leading: CupertinoNavigationBarBackButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
+                leading: CupertinoNavigationBarBackButton(onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop();
+                }),
                 middle: Text('Page 1 of tab $index'),
                 trailing: Icon(Icons.add_sharp),
               ),
