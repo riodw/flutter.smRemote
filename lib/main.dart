@@ -316,7 +316,90 @@ class _SecondPage extends State<SecondPage> {
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
                 middle: Text('Page 1 of tab $index'),
-                trailing: Icon(Icons.add_sharp),
+                trailing: GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          color: Colors.white10,
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            // mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              TextFormField(
+                                maxLength: 2,
+                                controller: myController,
+                                decoration: const InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  suffix: const Text('2 Character Max'),
+                                  hintText: 'Title',
+                                ),
+                              ),
+                              TextFormField(
+                                minLines: 1,
+                                // maxLines: ,
+                                // maxLength: 2,
+                                // controller: myController,
+                                decoration: const InputDecoration(
+                                  border: const OutlineInputBorder(),
+                                  // suffix: const Text('Description'),
+                                  hintText: 'Description',
+                                ),
+                              ),
+                              // const Text('Modal BottomSheet'),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              ButtonTheme(
+                                minWidth: 300.0,
+                                height: 50.0,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    if (myController.text.length > 0) {
+                                      setState(() {
+                                        commands.add(
+                                          {
+                                            'id': 0,
+                                            'name': myController.text,
+                                            'description':
+                                                'This is a description',
+                                          },
+                                        );
+                                        Navigator.pop(context);
+                                      });
+                                    }
+                                    // print(myController.text);
+                                  },
+                                  color: Colors.blue,
+                                  textColor: Colors.white,
+                                  child: const Text('Save'),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              ButtonTheme(
+                                minWidth: 300.0,
+                                height: 50.0,
+                                child: OutlineButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  color: Colors.grey,
+                                  child: const Text('Cancel'),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Icon(Icons.add_sharp),
+                ),
               ),
               child: Scaffold(
                 body: ListView.separated(
@@ -401,101 +484,6 @@ class _SecondPage extends State<SecondPage> {
                         ),
                       ],
                     );
-                    // else
-                    //   return FlatButton(
-                    //     onPressed: () {
-                    //       showModalBottomSheet<void>(
-                    //         context: context,
-                    //         builder: (BuildContext context) {
-                    //           return Container(
-                    //             margin: const EdgeInsets.symmetric(horizontal: 20),
-                    //             color: Colors.white10,
-                    //             child: Column(
-                    //               // mainAxisAlignment: MainAxisAlignment.center,
-                    //               // mainAxisSize: MainAxisSize.min,
-                    //               children: <Widget>[
-                    //                 const SizedBox(
-                    //                   height: 24,
-                    //                 ),
-                    //                 TextFormField(
-                    //                   maxLength: 2,
-                    //                   controller: myController,
-                    //                   decoration: const InputDecoration(
-                    //                     border: const OutlineInputBorder(),
-                    //                     suffix: const Text('2 Character Max'),
-                    //                     hintText: 'Title',
-                    //                   ),
-                    //                 ),
-                    //                 TextFormField(
-                    //                   minLines: 1,
-                    //                   // maxLines: ,
-                    //                   // maxLength: 2,
-                    //                   // controller: myController,
-                    //                   decoration: const InputDecoration(
-                    //                     border: const OutlineInputBorder(),
-                    //                     // suffix: const Text('Description'),
-                    //                     hintText: 'Description',
-                    //                   ),
-                    //                 ),
-                    //                 // const Text('Modal BottomSheet'),
-                    //                 const SizedBox(
-                    //                   height: 30,
-                    //                 ),
-                    //                 ButtonTheme(
-                    //                   minWidth: 300.0,
-                    //                   height: 50.0,
-                    //                   child: FlatButton(
-                    //                     onPressed: () {
-                    //                       if (myController.text.length > 0) {
-                    //                         setState(() {
-                    //                           commands.add(
-                    //                             {
-                    //                               'id': 0,
-                    //                               'name': myController.text,
-                    //                               'description':
-                    //                                   'This is a description',
-                    //                             },
-                    //                           );
-                    //                           Navigator.pop(context);
-                    //                         });
-                    //                       }
-                    //                       // print(myController.text);
-                    //                     },
-                    //                     color: Colors.blue,
-                    //                     textColor: Colors.white,
-                    //                     child: const Text('Save'),
-                    //                   ),
-                    //                 ),
-                    //                 const SizedBox(
-                    //                   height: 10,
-                    //                 ),
-                    //                 ButtonTheme(
-                    //                   minWidth: 300.0,
-                    //                   height: 50.0,
-                    //                   child: OutlineButton(
-                    //                     onPressed: () => Navigator.pop(context),
-                    //                     color: Colors.grey,
-                    //                     child: const Text('Cancel'),
-                    //                   ),
-                    //                 )
-                    //               ],
-                    //             ),
-                    //           );
-                    //         },
-                    //       );
-                    //     },
-                    //     color: Colors.indigoAccent,
-                    //     height: 54,
-                    //     textColor: Colors.white,
-                    //     padding: EdgeInsets.all(8.0),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(Icons.add),
-                    //         Text('New'),
-                    //       ],
-                    //     ),
-                    //   );
                   },
                 ),
               ),
