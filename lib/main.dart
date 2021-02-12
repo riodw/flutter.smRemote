@@ -294,15 +294,20 @@ class _SecondPage extends State<SecondPage> {
       tabBar: CupertinoTabBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.list_dash),
+            label: 'Tasks',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.book_solid),
-            // title: Text('Articles'),
+            label: 'History',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.eye_solid),
-            // title: Text('Views'),
+            icon: Icon(CupertinoIcons.gear_alt_fill),
+            label: 'Settings',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.eye_solid),
+            icon: Icon(CupertinoIcons.app_badge),
+            label: 'Switch',
             // title: Text('Views'),
           ),
         ],
@@ -315,7 +320,7 @@ class _SecondPage extends State<SecondPage> {
                 leading: CupertinoNavigationBarBackButton(onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
                 }),
-                middle: Text('Page 1 of tab $index'),
+                middle: Text('Ash\'s Tasks $index'),
                 trailing: GestureDetector(
                   onTap: () {
                     showModalBottomSheet<void>(
