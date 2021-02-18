@@ -23,16 +23,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.0
   # database
   cloud_firestore: ^0.14.4
   # for slide deleting emojis
   flutter_slidable: ^0.5.7
   # for loading settings page from bottom
   page_transition: ^1.1.7+5
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+  # time line (for task History)
+  flutter_timeline: ^0.1.1+12
 
 dev_dependencies:
   flutter_test:
