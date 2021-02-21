@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 // Pub
@@ -5,6 +7,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:page_transition/page_transition.dart';
+// - timeline - https://github.com/softmarshmallow/flutter-timeline/blob/master/example/lib/screen/plain_timeline_demo.dart
+import 'package:flutter_timeline/flutter_timeline.dart';
+import 'package:flutter_timeline/indicator_position.dart';
+import 'package:flutter_timeline/timeline_theme.dart';
+import 'package:flutter_timeline/timeline_theme_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -286,6 +293,23 @@ class _SecondPage extends State<SecondPage> {
     super.dispose();
   }
 
+  Widget get randomIndicator {
+    var candidates = [
+      TimelineDots.of(context).circleIcon,
+      Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: Colors.blueAccent,
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+        ),
+      ),
+    ];
+    final _random = new Random();
+    var element = candidates[_random.nextInt(candidates.length)];
+    return element;
+  }
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments;
@@ -319,9 +343,22 @@ class _SecondPage extends State<SecondPage> {
               builder: (BuildContext context) {
                 return CupertinoPageScaffold(
                   navigationBar: CupertinoNavigationBar(
-                    leading: CupertinoNavigationBarBackButton(onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    }),
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
                     middle: Text('Ash\'s Tasks $index'),
                     trailing: GestureDetector(
                       onTap: () {
@@ -502,20 +539,83 @@ class _SecondPage extends State<SecondPage> {
             );
             break;
           case 1:
-            return CupertinoTabView(builder: (BuildContext context) {
-              return CupertinoPageScaffold(
+            return CupertinoTabView(
+              builder: (BuildContext context) {
+                return CupertinoPageScaffold(
                   navigationBar: CupertinoNavigationBar(
-                    leading: CupertinoNavigationBarBackButton(onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    }),
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // CupertinoNavigationBarBackButton(onPressed: () {
+                    //   Navigator.of(context, rootNavigator: true).pop();
+                    // }),
                     middle: Text('Ash\'s Tasks $index'),
-                    trailing: GestureDetector(
-                      onTap: () {},
-                      child: Icon(Icons.add_sharp),
+                    // trailing: GestureDetector(
+                    //   onTap: () {},
+                    //   child: Icon(Icons.add_sharp),
+                    // ),
+                  ),
+                  child: SafeArea(
+                    child: Scaffold(
+                      body: TimelineTheme(
+                        data: TimelineThemeData(
+                          lineColor: Colors.blueAccent,
+                          itemGap: 100,
+                          lineGap: 0,
+                        ),
+                        child: Timeline(
+                          anchor: IndicatorPosition.center,
+                          indicatorSize: 56,
+                          altOffset: Offset(10, 10),
+                          events: [
+                            TimelineEventDisplay(
+                              anchor: IndicatorPosition.top,
+                              indicatorOffset: Offset(0, 0),
+                              child: TimelineEventCard(
+                                title: Text("asdf"),
+                                content: Text(
+                                  "someone commented on your timeline ${DateTime.now()}",
+                                ),
+                              ),
+                              indicator: Container(
+                                width: 16,
+                                height: 16,
+                                decoration: BoxDecoration(
+                                  color: Colors.blueAccent,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                ),
+                              ),
+                            ),
+                            TimelineEventDisplay(
+                              child: Card(
+                                child: TimelineEventCard(
+                                  title: Text("click the + button"),
+                                  content: Text("to add a new event item"),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  child: Scaffold());
-            });
+                );
+              },
+            );
             break;
           case 2:
             return Center(
