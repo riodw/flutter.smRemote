@@ -51,7 +51,7 @@ dynamic command = {
 List<dynamic> commands = [
   {
     'id': 0,
-    'name': '😈',
+    'name': '🔔',
     'description': 'This is a description',
   },
   {
@@ -284,7 +284,14 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPage extends State<SecondPage> {
+  TextEditingController _textController;
   final myController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController(text: 'initial text');
+  }
 
   @override
   void dispose() {
@@ -342,196 +349,216 @@ class _SecondPage extends State<SecondPage> {
             return CupertinoTabView(
               builder: (BuildContext context) {
                 return CupertinoPageScaffold(
-                  navigationBar: CupertinoNavigationBar(
-                    leading: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                      },
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Done',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
-                          ),
-                        ),
-                      ),
-                    ),
-                    middle: Text('Ash\'s Tasks $index'),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              color: Colors.white10,
-                              child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                // mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  TextFormField(
-                                    maxLength: 2,
-                                    controller: myController,
-                                    decoration: const InputDecoration(
-                                      border: const OutlineInputBorder(),
-                                      suffix: const Text('2 Character Max'),
-                                      hintText: 'Title',
-                                    ),
-                                  ),
-                                  TextFormField(
-                                    minLines: 1,
-                                    // maxLines: ,
-                                    // maxLength: 2,
-                                    // controller: myController,
-                                    decoration: const InputDecoration(
-                                      border: const OutlineInputBorder(),
-                                      // suffix: const Text('Description'),
-                                      hintText: 'Description',
-                                    ),
-                                  ),
-                                  // const Text('Modal BottomSheet'),
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-                                  ButtonTheme(
-                                    minWidth: 300.0,
-                                    height: 50.0,
-                                    child: FlatButton(
-                                      onPressed: () {
-                                        if (myController.text.length > 0) {
-                                          setState(() {
-                                            commands.add(
-                                              {
-                                                'id': 0,
-                                                'name': myController.text,
-                                                'description':
-                                                    'This is a description',
-                                              },
-                                            );
-                                            Navigator.pop(context);
-                                          });
-                                        }
-                                        // print(myController.text);
-                                      },
-                                      color: Colors.blue,
-                                      textColor: Colors.white,
-                                      child: const Text('Save'),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  ButtonTheme(
-                                    minWidth: 300.0,
-                                    height: 50.0,
-                                    child: OutlineButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      color: Colors.grey,
-                                      child: const Text('Cancel'),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Icon(Icons.add_sharp),
-                    ),
-                  ),
-                  child: Scaffold(
-                    body: ListView.separated(
-                      itemCount: commands.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          Divider(height: 1, color: Colors.grey),
-                      itemBuilder:
-                          (final BuildContext context, final int index) {
-                        // print(commands[index]['name']);
-                        // if (index != commands.length - 1)
-                        return Slidable(
-                          actionPane: SlidableDrawerActionPane(),
-                          actionExtentRatio: 0.25,
-                          child: Container(
-                            color: Colors.white,
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Text(
-                                  commands[index]['name'],
-                                  style: TextStyle(
-                                      fontSize: 35, color: Colors.black),
+                  child: SafeArea(
+                    child: CustomScrollView(
+                      slivers: [
+                        CupertinoSliverNavigationBar(
+                          leading: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Done',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
                                 ),
-                                foregroundColor: Colors.white,
                               ),
-                              title: Text(
-                                commands[index]['description'],
-                              ),
-                              subtitle: Text('SlidableDrawerDelegate'),
                             ),
                           ),
-                          // actions: <Widget>[
-                          //   IconSlideAction(
-                          //     caption: 'Archive',
-                          //     color: Colors.blue,
-                          //     icon: Icons.archive,
-                          //     onTap: () {},
-                          //   ),
-                          //   IconSlideAction(
-                          //     caption: 'Share',
-                          //     color: Colors.indigo,
-                          //     icon: Icons.share,
-                          //     onTap: () {},
-                          //   ),
-                          // ],
-                          secondaryActions: <Widget>[
-                            // IconSlideAction(
-                            //   caption: 'Edit',
-                            //   color: Colors.indigo,
-                            //   icon: Icons.edit,
-                            //   onTap: () {},
-                            // ),
-                            IconSlideAction(
-                              caption: 'Delete',
-                              color: Colors.red,
-                              icon: Icons.delete,
-                              onTap: () => showDialog(
-                                context: context,
-                                builder: (context) => CupertinoAlertDialog(
-                                  title:
-                                      Text('Delete ' + commands[index]['name']),
-                                  content: const Text(
-                                    'Are you Sure?',
-                                  ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      textColor: Colors.blue,
-                                      child: const Text('Cancel'),
-                                      onPressed: () => Navigator.pop(context),
+                          // middle: Text('Kindacode.com'),
+                          trailing: Material(
+                            child: IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {
+                                showModalBottomSheet<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      color: Colors.white10,
+                                      child: Column(
+                                        // mainAxisAlignment: MainAxisAlignment.center,
+                                        // mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          const SizedBox(
+                                            height: 24,
+                                          ),
+                                          TextFormField(
+                                            maxLength: 2,
+                                            controller: myController,
+                                            decoration: const InputDecoration(
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              suffix:
+                                                  const Text('2 Character Max'),
+                                              hintText: 'Title',
+                                            ),
+                                          ),
+                                          TextFormField(
+                                            minLines: 1,
+                                            // maxLines: ,
+                                            // maxLength: 2,
+                                            // controller: myController,
+                                            decoration: const InputDecoration(
+                                              border:
+                                                  const OutlineInputBorder(),
+                                              // suffix: const Text('Description'),
+                                              hintText: 'Description',
+                                            ),
+                                          ),
+                                          // const Text('Modal BottomSheet'),
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          ButtonTheme(
+                                            minWidth: 300.0,
+                                            height: 50.0,
+                                            child: FlatButton(
+                                              onPressed: () {
+                                                if (myController.text.length >
+                                                    0) {
+                                                  setState(() {
+                                                    commands.add(
+                                                      {
+                                                        'id': 0,
+                                                        'name':
+                                                            myController.text,
+                                                        'description':
+                                                            'This is a description',
+                                                      },
+                                                    );
+                                                    Navigator.pop(context);
+                                                  });
+                                                }
+                                                // print(myController.text);
+                                              },
+                                              color: Colors.blue,
+                                              textColor: Colors.white,
+                                              child: const Text('Save'),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          ButtonTheme(
+                                            minWidth: 300.0,
+                                            height: 50.0,
+                                            child: OutlineButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                              color: Colors.grey,
+                                              child: const Text('Cancel'),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          largeTitle: Text('Tasks $index'),
+                        ),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (final BuildContext context, final int index) {
+                              final int itemIndex = index ~/ 2;
+                              if (index.isEven) {
+                                return Slidable(
+                                  actionPane: SlidableDrawerActionPane(),
+                                  actionExtentRatio: 0.25,
+                                  child: Material(
+                                    child: Container(
+                                      color: Colors.white,
+                                      child: ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          child: Text(
+                                            commands[itemIndex]['name'],
+                                            style: TextStyle(
+                                                fontSize: 35,
+                                                color: Colors.black),
+                                          ),
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        title: Text(
+                                          commands[itemIndex]['description'],
+                                        ),
+                                        subtitle:
+                                            Text('SlidableDrawerDelegate'),
+                                      ),
                                     ),
-                                    FlatButton(
-                                      textColor: Colors.red,
-                                      child: const Text('DELETE'),
-                                      onPressed: () async {
-                                        // setState(() {
-                                        //   commands.removeAt(index);
-                                        //   Navigator.pop(context);
-                                        // });
-                                      },
+                                  ),
+                                  // actions: <Widget>[
+                                  //   IconSlideAction(
+                                  //     caption: 'Archive',
+                                  //     color: Colors.blue,
+                                  //     icon: Icons.archive,
+                                  //     onTap: () {},
+                                  //   ),
+                                  //   IconSlideAction(
+                                  //     caption: 'Share',
+                                  //     color: Colors.indigo,
+                                  //     icon: Icons.share,
+                                  //     onTap: () {},
+                                  //   ),
+                                  // ],
+                                  secondaryActions: <Widget>[
+                                    // IconSlideAction(
+                                    //   caption: 'Edit',
+                                    //   color: Colors.indigo,
+                                    //   icon: Icons.edit,
+                                    //   onTap: () {},
+                                    // ),
+                                    IconSlideAction(
+                                      caption: 'Delete',
+                                      color: Colors.red,
+                                      icon: Icons.delete,
+                                      onTap: () => showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            CupertinoAlertDialog(
+                                          title: Text('Delete ' +
+                                              commands[index]['name']),
+                                          content: const Text(
+                                            'Are you Sure?',
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              textColor: Colors.blue,
+                                              child: const Text('Cancel'),
+                                              onPressed: () =>
+                                                  Navigator.pop(context),
+                                            ),
+                                            FlatButton(
+                                              textColor: Colors.red,
+                                              child: const Text('DELETE'),
+                                              onPressed: () async {
+                                                // setState(() {
+                                                //   commands.removeAt(index);
+                                                //   Navigator.pop(context);
+                                                // });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+                                );
+                              }
+                              return Divider(height: 0, color: Colors.grey);
+                            },
+                            childCount: max(0, commands.length * 2 - 1),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -539,6 +566,7 @@ class _SecondPage extends State<SecondPage> {
             );
             break;
           case 1:
+            // HISTORY
             return CupertinoTabView(
               builder: (BuildContext context) {
                 return CupertinoPageScaffold(
@@ -562,7 +590,7 @@ class _SecondPage extends State<SecondPage> {
                     // CupertinoNavigationBarBackButton(onPressed: () {
                     //   Navigator.of(context, rootNavigator: true).pop();
                     // }),
-                    middle: Text('Ash\'s Tasks $index'),
+                    middle: Text('History $index'),
                     // trailing: GestureDetector(
                     //   onTap: () {},
                     //   child: Icon(Icons.add_sharp),
@@ -618,109 +646,146 @@ class _SecondPage extends State<SecondPage> {
             );
             break;
           case 2:
-            return Center(
-              child: Text('Tasks $index'),
+            // SETTINGS
+            return CupertinoTabView(
+              builder: (BuildContext context) {
+                return CupertinoPageScaffold(
+                    child: CustomScrollView(
+                  slivers: [
+                    CupertinoSliverNavigationBar(
+                      leading: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                        },
+                        child: Material(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Done',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // middle: Text('Kindacode.com'),
+                      trailing: Material(
+                        child: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () {},
+                        ),
+                      ),
+                      largeTitle: Text('Ash\'s Tasks $index'),
+                    ),
+                    // SafeArea(
+                    //   child: Scaffold(
+                    //     body: TimelineTheme(
+                    //       data: TimelineThemeData(
+                    //         lineColor: Colors.blueAccent,
+                    //         itemGap: 100,
+                    //         lineGap: 0,
+                    //       ),
+                    //       child: Column(children: <Widget>[
+                    //         CupertinoTextField(controller: _textController)
+                    //       ]),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                )
+                    // navigationBar: CupertinoNavigationBar(
+                    //   leading: GestureDetector(
+                    //     onTap: () {
+                    //       Navigator.of(context, rootNavigator: true).pop();
+                    //     },
+                    //     child: Align(
+                    //       alignment: Alignment.centerLeft,
+                    //       child: Text(
+                    //         'Done',
+                    //         style: TextStyle(
+                    //           decoration: TextDecoration.underline,
+                    //           fontWeight: FontWeight.bold,
+                    //           color: Colors.blue,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   middle: Text('Ash\'s Tasks $index'),
+                    //   // trailing: GestureDetector(
+                    //   //   onTap: () {},
+                    //   //   child: Icon(Icons.add_sharp),
+                    //   // ),
+                    // ),
+                    // child: SafeArea(
+                    //   child: Scaffold(
+                    //     body: TimelineTheme(
+                    //       data: TimelineThemeData(
+                    //         lineColor: Colors.blueAccent,
+                    //         itemGap: 100,
+                    //         lineGap: 0,
+                    //       ),
+                    //       child: Column(children: <Widget>[
+                    //         CupertinoTextField(controller: _textController)
+                    //       ]),
+                    //     ),
+                    //   ),
+                    // ),
+                    );
+              },
             );
             break;
           case 3:
-            return Center(
-              child: Text('Tasks $index'),
+            // SWITCH
+            return CupertinoTabView(
+              builder: (BuildContext context) {
+                return CupertinoPageScaffold(
+                  navigationBar: CupertinoNavigationBar(
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).pop();
+                      },
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Done',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
+                    // CupertinoNavigationBarBackButton(onPressed: () {
+                    //   Navigator.of(context, rootNavigator: true).pop();
+                    // }),
+                    middle: Text('Ash\'s Tasks $index'),
+                    // trailing: GestureDetector(
+                    //   onTap: () {},
+                    //   child: Icon(Icons.add_sharp),
+                    // ),
+                  ),
+                  child: SafeArea(
+                    child: Scaffold(
+                      body: TimelineTheme(
+                        data: TimelineThemeData(
+                          lineColor: Colors.blueAccent,
+                          itemGap: 100,
+                          lineGap: 0,
+                        ),
+                        child: Text('Tasks $index'),
+                      ),
+                    ),
+                  ),
+                );
+              },
             );
             break;
         }
       },
     );
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     // title: Text(args ?? "Page Transition Plugin"),
-    //     title: Text("Page Transition Plugin"),
-    //     actions: <Widget>[
-    //       IconButton(
-    //         icon: Icon(Icons.add_sharp),
-    //         onPressed: () {
-    //           showModalBottomSheet<void>(
-    //             context: context,
-    //             builder: (BuildContext context) {
-    //               return Container(
-    //                 margin: const EdgeInsets.symmetric(horizontal: 20),
-    //                 color: Colors.white10,
-    //                 child: Column(
-    //                   // mainAxisAlignment: MainAxisAlignment.center,
-    //                   // mainAxisSize: MainAxisSize.min,
-    //                   children: <Widget>[
-    //                     const SizedBox(
-    //                       height: 24,
-    //                     ),
-    //                     TextFormField(
-    //                       maxLength: 2,
-    //                       controller: myController,
-    //                       decoration: const InputDecoration(
-    //                         border: const OutlineInputBorder(),
-    //                         suffix: const Text('2 Character Max'),
-    //                         hintText: 'Title',
-    //                       ),
-    //                     ),
-    //                     TextFormField(
-    //                       minLines: 1,
-    //                       // maxLines: ,
-    //                       // maxLength: 2,
-    //                       // controller: myController,
-    //                       decoration: const InputDecoration(
-    //                         border: const OutlineInputBorder(),
-    //                         // suffix: const Text('Description'),
-    //                         hintText: 'Description',
-    //                       ),
-    //                     ),
-    //                     // const Text('Modal BottomSheet'),
-    //                     const SizedBox(
-    //                       height: 30,
-    //                     ),
-    //                     ButtonTheme(
-    //                       minWidth: 300.0,
-    //                       height: 50.0,
-    //                       child: FlatButton(
-    //                         onPressed: () {
-    //                           if (myController.text.length > 0) {
-    //                             setState(() {
-    //                               commands.add(
-    //                                 {
-    //                                   'id': 0,
-    //                                   'name': myController.text,
-    //                                   'description': 'This is a description',
-    //                                 },
-    //                               );
-    //                               Navigator.pop(context);
-    //                             });
-    //                           }
-    //                           // print(myController.text);
-    //                         },
-    //                         color: Colors.blue,
-    //                         textColor: Colors.white,
-    //                         child: const Text('Save'),
-    //                       ),
-    //                     ),
-    //                     const SizedBox(
-    //                       height: 10,
-    //                     ),
-    //                     ButtonTheme(
-    //                       minWidth: 300.0,
-    //                       height: 50.0,
-    //                       child: OutlineButton(
-    //                         onPressed: () => Navigator.pop(context),
-    //                         color: Colors.grey,
-    //                         child: const Text('Cancel'),
-    //                       ),
-    //                     )
-    //                   ],
-    //                 ),
-    //               );
-    //             },
-    //           );
-    //         },
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
